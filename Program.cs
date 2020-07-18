@@ -20,7 +20,8 @@ namespace Lucrum
             {
                 Console.WriteLine($"[{DateTime.Now}] Файл конфигурации не найден. Создаём его.");
 
-                File.Create("settings.conf");
+                File.Create("settings.conf").Close();
+
                 File.WriteAllText("settings.conf", "###################" + Environment.NewLine
                                                  + "# TERMINAL CONFIG #" + Environment.NewLine
                                                  + "###################" + Environment.NewLine
