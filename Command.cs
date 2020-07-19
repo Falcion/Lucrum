@@ -20,12 +20,12 @@ namespace Lucrum
             gitClient.Credentials = tokenAuth;
 
             Console.OutputEncoding = Encoding.UTF8;
-
             string userPrefix = Global.userPrefix;
             string cmdTask = "";
 
             while (cmdTask != $"{userPrefix}shutdown")
             {
+                userPrefix = Global.userPrefix;
                 Console.Write("[Пользовательский ввод] ");
                 cmdTask = Console.ReadLine();
 
@@ -125,10 +125,6 @@ namespace Lucrum
 
                                     var issues = await gitClient.Issue.GetAllForRepository(args[0], args[1], recentlyIssues);
 
-                                    var allIssues = await gitClient.Issue.GetAllForRepository(args[0], args[1]);
-
-                                    int issuesCount = allIssues.Count;
-
                                     Console.WriteLine("-----[ Темы репозитории ]-----");
                                     for(int i = 0; i < issues.Count; i++) {
                                         var issue = issues[i];
@@ -167,6 +163,47 @@ namespace Lucrum
                             Console.WriteLine("-----[ Поисковые запросы ]-----");
                             break;
                     }
+                    break;
+
+                case "help":
+                    Console.WriteLine("-----[ Помощь по командам ]-----");
+                    Console.WriteLine($"[{DateTime.Now}] Командный префикс: {prefix}");
+                    Console.WriteLine("-----[ Команды Git ]-----");
+                    Console.WriteLine($"{prefix}git repos info [автор репозитории] [название репозитории]");
+                    Console.WriteLine($"{prefix}git repos branches [автор репозитории] [название репозитории]");
+                    Console.WriteLine($"{prefix}git repos releases [автор репозитории] [название репозитории] [количество выпусков]");
+                    Console.WriteLine($"{prefix}git repos issues [автор репозитории] [название репозитории] [количество дней с момента открытия темы]");
+                    Console.WriteLine("-----[ Системные команды ]-----");
+                    Console.WriteLine($"{prefix}help");
+                    Console.WriteLine($"{prefix}prefix [командный префикс]");
+                    break;
+
+                case "prefix":
+                    args = cmd.Remove(0, prefix.Length).Split(' ').ToList();
+                    args.Remove(newCmd);
+
+                    Console.WriteLine($"[{DateTime.Now}] Командный префикс изменён на: {args[0]}");
+
+                    string[] fileArray = File.ReadAllLines("settings.conf");
+
+                    string oldPrefix = null;
+
+                    for(int i = 0; i < fileArray.Length; i++)
+                    {
+                        if (fileArray[i].StartsWith('#')) continue;
+
+                        if (fileArray[i].StartsWith("USERPREFIX="))
+                        {
+                            oldPrefix = fileArray[i].Remove(0, 11);
+                        }
+                    }
+
+                    string fileText = File.ReadAllText("settings.conf");
+
+                    fileText.Replace($"USERPREFIX={oldPrefix}", $"USERPREFIX={args[0]}");
+
+                    File.WriteAllText("settings.conf", fileText);
+                    Global.userPrefix = args[0];
                     break;
             }
         }
