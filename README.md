@@ -8,11 +8,11 @@
 
 ![Octokit.net](https://img.shields.io/badge/Octokit.net-0.48.0-brightgreen)
 
-Терминал написан на VS 2019 при помощи библиотеки [Octokit.net](https://github.com/octokit/octokit.net).
+Терминал написан на VS 2019 c помощью библиотеки [Octokit.net](https://github.com/octokit/octokit.net).
 
 ## Предисловие
 
-Lucrum - это терминал, написанный на CSharp, созданный для взаимодействия с GitHub API и с локальными данными (файлами, директориями).
+Lucrum - это терминал, написанный на CSharp, созданный для взаимодействия с GitHub API и с локальными данными (файлами, директориями). Также включает в себя динамическую смену префикса команд.
 
 ## Лицензия репозитории
 
