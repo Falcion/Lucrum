@@ -205,6 +205,67 @@ namespace Lucrum
                     File.WriteAllText("settings.conf", fileText);
                     Global.userPrefix = args[0];
                     break;
+
+                case "file":
+                    args.Remove("file");
+                    
+                    switch(args[0]) {
+                        case "create":
+                            args.Remove("create");
+
+                            File.Create(args[0] + args[1]).Close();
+                            Console.WriteLine($"[{DateTime.Now}] Файл успешно создан в пути: {args[0] + args[1]}");
+                            break;
+
+                        case "delete":
+                            args.Remove("delete");
+
+                            if(File.Exists(args[0] + args[1])) 
+                            {
+                                File.Delete(args[0] + args[1]);
+                                Console.WriteLine($"[{DateTime.Now}] Файл успешно удалён");
+                            }
+                            else await Error("Такого файла в такой директории не существует!");
+                            break;
+
+                        case "move":
+                            args.Remove("move");
+
+                            if(File.Exists(args[0])) 
+                            {
+                                File.Move(args[0], args[1]);
+                                Console.WriteLine($"[{DateTime.Now}] Файл успешно передвинут. Пути: {args[0]} в {args[1]}");
+                            }
+                            else await Error("Такого файла в такой директории не существует!");
+                            break;
+
+                        case "replace":
+                            args.Remove("replace");
+
+                            if(File.Exists(args[0])) 
+                            {
+                                File.Replace(args[0], args[1], $"backup/replace-{DateTime.Now}");
+                                Console.WriteLine($"[{DateTime.Now}] Данные файла успешно заменены. Файл резервного сохранения");
+                            }
+                            else await Error("Такого файла в такой директории не существует!");
+                            break;
+
+                        case "rewrite":
+                            args.Remove("rewrite");
+
+                            if(File.Exists(args[0])) 
+                            {
+                                File.WriteAllText(args[0], $"{args.Skip(1)}");
+                                Console.WriteLine($"[{DateTime.Now}] Файл успешно перезаписан.");
+                            }
+                            else await Error("Такого файла в такой директории не существует!");
+                            break;
+                    }
+                    break;
+
+                default:
+                    await Error("Неизвестная команда или неправильно указанные аргументы.");
+                    break;
             }
         }
 
