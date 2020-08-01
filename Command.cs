@@ -176,6 +176,12 @@ namespace Lucrum
                     Console.WriteLine("-----[ Системные команды ]-----");
                     Console.WriteLine($"{prefix}help");
                     Console.WriteLine($"{prefix}prefix [командный префикс]");
+                    Console.WriteLine("-----[ Файловые команды ]-----");
+                    Console.WriteLine($"{prefix}file create [полный путь] [название файла]");
+                    Console.WriteLine($"{prefix}file delete [полный путь] [название файла]");
+                    Console.WriteLine($"{prefix}file move [полный путь с названием файла] [полный путь с названием файла]");
+                    Console.WriteLine($"{prefix}file replace [полный путь с названием файла] [полный путь с названием файла]");
+                    Console.WriteLine($"{prefix}file rewrite [полный путь с названием файла] [текст]");
                     break;
 
                 case "prefix":
@@ -230,6 +236,12 @@ namespace Lucrum
 
                         case "move":
                             args.Remove("move");
+
+                            if(args[0] == args[1]) 
+                            {
+                                await Error("Аргументы переноса файлов имеют одинаковые значения.");
+                                return;
+                            }
 
                             if(File.Exists(args[0])) 
                             {
