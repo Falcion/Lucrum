@@ -1,15 +1,14 @@
-# Список изменений Lucrum
+# Changelog
 
 ## 1.0.0
 
-* Добавлено ядро терминала
+* Added terminal's core.
 
 ## 1.0.1
 
-* Добавлена основная поддержка Git
-* Исправлена ошибка с файлом конфигурации
-* Добавлен токен GitHub API (недействительный)
+* Added main support for Git
+* Fixed issue with config file.
 
 ## 1.0.2
 
-* Добавлена команда help и prefix
+* Added commands: help and prefix

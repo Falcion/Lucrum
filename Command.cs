@@ -26,14 +26,14 @@ namespace Lucrum
             while (cmdTask != $"{userPrefix}shutdown")
             {
                 userPrefix = Global.userPrefix;
-                Console.Write("[Пользовательский ввод] ");
+                Console.Write("[User Input] ");
                 cmdTask = Console.ReadLine();
 
                 if (cmdTask.StartsWith(userPrefix)) await Schedule(cmdTask, userPrefix);
-                else Console.WriteLine($"[{DateTime.Now}] Пропущен командный префикс.");
+                else Console.WriteLine($"[{DateTime.Now}] Command prefix was skipped.");
             }
 
-            Console.WriteLine($"[{DateTime.Now}] Консоль успешно завершила свою работу.");
+            Console.WriteLine($"[{DateTime.Now}] Console was shutdowned successfully.");
         }
 
         private async Task Schedule(string cmd, string prefix)
@@ -61,13 +61,13 @@ namespace Lucrum
 
                                     Repository repos = await gitClient.Repository.Get(args[0], args[1]);
 
-                                    Console.WriteLine("-----[ Репозитория GitHub ]-----");
-                                    Console.WriteLine($"Описание репозитории: {repos.Description}");
-                                    Console.WriteLine($"ID репозитории: {repos.Id}");
-                                    Console.WriteLine($"Лицензия репозитории: {repos.License.Name}");
-                                    Console.WriteLine($"Дата создания: {repos.CreatedAt.DateTime}");
-                                    Console.WriteLine($"Наименование репозитории: {repos.Name}");
-                                    Console.WriteLine($"Последнее обновление: {repos.UpdatedAt.DateTime}");
+                                    Console.WriteLine("-----[ GitHub Repository ]-----");
+                                    Console.WriteLine($"Description: {repos.Description}");
+                                    Console.WriteLine($"Repository's ID: {repos.Id}");
+                                    Console.WriteLine($"Repository's License: {repos.License.Name}");
+                                    Console.WriteLine($"Creation Date: {repos.CreatedAt.DateTime}");
+                                    Console.WriteLine($"Repository's Name: {repos.Name}");
+                                    Console.WriteLine($"Last Update (Commit): {repos.UpdatedAt.DateTime}");
                                     Console.WriteLine($"-----[ {repos.HtmlUrl} ]-----");
                                     break;
 
@@ -76,11 +76,11 @@ namespace Lucrum
 
                                     var branches = await gitClient.Repository.Branch.GetAll(args[0], args[1]);
 
-                                    Console.WriteLine("-----[ Ветки репозитории ]-----");
+                                    Console.WriteLine("-----[ Repository's Branches ]-----");
                                     for(int i = 0; i < branches.Count; i++) 
                                     {
                                         var branch = branches[i];
-                                        Console.WriteLine($"Ветка #{i+1}: {branch.Name}");
+                                        Console.WriteLine($"Branch #{i+1}: {branch.Name}");
                                     }
                                     Console.WriteLine($"-----[ https://github.com/{args[0]}/{args[1]}/branches ]-----");
                                     break;
@@ -96,11 +96,11 @@ namespace Lucrum
 
                                     if(releaseCount == 0) 
                                     {
-                                        await Error("у данной репозитории нет выпусков!");
+                                        await Error("This repository doesn't have any releases!");
                                         return;
                                     }
 
-                                    Console.WriteLine("-----[ Выпуски репозитории ]-----");
+                                    Console.WriteLine("-----[ Repository's Releases ]-----");
                                     for(int i = 0; i < releaseCount; i++) 
                                     {
                                         var release = releases[i];
@@ -125,7 +125,7 @@ namespace Lucrum
 
                                     var issues = await gitClient.Issue.GetAllForRepository(args[0], args[1], recentlyIssues);
 
-                                    Console.WriteLine("-----[ Темы репозитории ]-----");
+                                    Console.WriteLine("-----[ Repository's Issues ]-----");
                                     for(int i = 0; i < issues.Count; i++) {
                                         var issue = issues[i];
 
@@ -146,10 +146,10 @@ namespace Lucrum
                             var coreReset = coreRate.Reset;
 
                             Console.WriteLine("-----[ GitHub API ]-----");
-                            Console.WriteLine($"Основных запросов в час: {corePerHour}");
-                            Console.WriteLine($"Осталось основных запросов: {coreLeft}");
-                            Console.WriteLine($"Сброс основных запросов: {coreReset}");
-                            Console.WriteLine("-----[ Основные запросы ]-----");
+                            Console.WriteLine($"Core Requests per Hour: {corePerHour}");
+                            Console.WriteLine($"Core Requests Left: {coreLeft}");
+                            Console.WriteLine($"Core Limit Reset: {coreReset}");
+                            Console.WriteLine("-----[ Core Requests ]-----");
 
                             var searchRate = miscRate.Resources.Search;
 
@@ -157,38 +157,38 @@ namespace Lucrum
                             var searchLeft = searchRate.Remaining;
                             var searchResest = searchRate.Reset;
 
-                            Console.WriteLine($"Поисковых запросов в минуту: {searchPerMinute}");
-                            Console.WriteLine($"Осталось поисковых запросов: {searchLeft}");
-                            Console.WriteLine($"Сброс поисковых запросов: {searchResest}");
-                            Console.WriteLine("-----[ Поисковые запросы ]-----");
+                            Console.WriteLine($"Search Requests per Minute: {searchPerMinute}");
+                            Console.WriteLine($"Search Requests Left: {searchLeft}");
+                            Console.WriteLine($"Search Limit Reset: {searchResest}");
+                            Console.WriteLine("-----[ Search Requests ]-----");
                             break;
                     }
                     break;
 
                 case "help":
-                    Console.WriteLine("-----[ Помощь по командам ]-----");
-                    Console.WriteLine($"[{DateTime.Now}] Командный префикс: {prefix}");
-                    Console.WriteLine("-----[ Команды Git ]-----");
-                    Console.WriteLine($"{prefix}git repos info [автор репозитории] [название репозитории]");
-                    Console.WriteLine($"{prefix}git repos branches [автор репозитории] [название репозитории]");
-                    Console.WriteLine($"{prefix}git repos releases [автор репозитории] [название репозитории] [количество выпусков]");
-                    Console.WriteLine($"{prefix}git repos issues [автор репозитории] [название репозитории] [количество дней с момента открытия темы]");
-                    Console.WriteLine("-----[ Системные команды ]-----");
+                    Console.WriteLine("-----[ Help ]-----");
+                    Console.WriteLine($"[{DateTime.Now}] Command prefix: {prefix}");
+                    Console.WriteLine("-----[ Git ]-----");
+                    Console.WriteLine($"{prefix}git repos info [author] [repository name]");
+                    Console.WriteLine($"{prefix}git repos branches [author] [repository name]");
+                    Console.WriteLine($"{prefix}git repos releases [author] [repository name] [releases count]");
+                    Console.WriteLine($"{prefix}git repos issues [author] [repository name] [days]");
+                    Console.WriteLine("-----[ System ]-----");
                     Console.WriteLine($"{prefix}help");
-                    Console.WriteLine($"{prefix}prefix [командный префикс]");
-                    Console.WriteLine("-----[ Файловые команды ]-----");
-                    Console.WriteLine($"{prefix}file create [полный путь] [название файла]");
-                    Console.WriteLine($"{prefix}file delete [полный путь] [название файла]");
-                    Console.WriteLine($"{prefix}file move [полный путь с названием файла] [полный путь с названием файла]");
-                    Console.WriteLine($"{prefix}file replace [полный путь с названием файла] [полный путь с названием файла]");
-                    Console.WriteLine($"{prefix}file rewrite [полный путь с названием файла] [текст]");
+                    Console.WriteLine($"{prefix}prefix [prefix]");
+                    Console.WriteLine("-----[ File ]-----");
+                    Console.WriteLine($"{prefix}file create [full path to file] [file name]");
+                    Console.WriteLine($"{prefix}file delete [full path to file] [file name]");
+                    Console.WriteLine($"{prefix}file move [full path to file with file name] [full path to file with file name]");
+                    Console.WriteLine($"{prefix}file replace [full path to file with file name] [full path to file with file name]");
+                    Console.WriteLine($"{prefix}file rewrite [full path to file with file name] [text]");
                     break;
 
                 case "prefix":
                     args = cmd.Remove(0, prefix.Length).Split(' ').ToList();
                     args.Remove(newCmd);
 
-                    Console.WriteLine($"[{DateTime.Now}] Командный префикс изменён на: {args[0]}");
+                    Console.WriteLine($"[{DateTime.Now}] New command prefix: {args[0]}");
 
                     string[] fileArray = File.ReadAllLines("settings.conf");
 
@@ -220,7 +220,7 @@ namespace Lucrum
                             args.Remove("create");
 
                             File.Create(args[0] + args[1]).Close();
-                            Console.WriteLine($"[{DateTime.Now}] Файл успешно создан в пути: {args[0] + args[1]}");
+                            Console.WriteLine($"[{DateTime.Now}] File successfully created at: {args[0] + args[1]}");
                             break;
 
                         case "delete":
@@ -229,9 +229,9 @@ namespace Lucrum
                             if(File.Exists(args[0] + args[1])) 
                             {
                                 File.Delete(args[0] + args[1]);
-                                Console.WriteLine($"[{DateTime.Now}] Файл успешно удалён");
+                                Console.WriteLine($"[{DateTime.Now}] File successfully deleted.");
                             }
-                            else await Error("Такого файла в такой директории не существует!");
+                            else await Error("There is no such file in such directory!");
                             break;
 
                         case "move":
@@ -239,16 +239,16 @@ namespace Lucrum
 
                             if(args[0] == args[1]) 
                             {
-                                await Error("Аргументы переноса файлов имеют одинаковые значения.");
+                                await Error("Files are identical!");
                                 return;
                             }
 
                             if(File.Exists(args[0])) 
                             {
                                 File.Move(args[0], args[1]);
-                                Console.WriteLine($"[{DateTime.Now}] Файл успешно передвинут. Пути: {args[0]} в {args[1]}");
+                                Console.WriteLine($"[{DateTime.Now}] File moved successfully. Paths: {args[0]} в {args[1]}");
                             }
-                            else await Error("Такого файла в такой директории не существует!");
+                            else await Error("There is no such file in such directory!");
                             break;
 
                         case "replace":
