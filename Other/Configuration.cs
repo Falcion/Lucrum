@@ -44,6 +44,8 @@ public class Configuration {
 
                     else Error("Wrong token's format! Please, rewrite it or reboot configuration file!");
 
+                    if(configArray[i] == " " || configArray[i] == null) Error("Token is null! Please, check configuration file and re-write your's GitHub API token!"); 
+
                     Storage.ApiToken = configArray[i];
 
                     Console.WriteLine("Token was read successfully, configuration completed.");

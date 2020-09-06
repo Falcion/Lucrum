@@ -1,4 +1,8 @@
 using System;
+using System.Linq;
+using System.Threading;
+using System.Collections;
+using System.Collections.Generic;
 
 public class Core {
 
@@ -8,19 +12,39 @@ public class Core {
 
         while(command != "shutdown") {
 
+            Thread.Sleep(2000);
+
+            Console.ForegroundColor = ConsoleColor.White;
             Console.Write("Enter command: ");
 
             command = Console.ReadLine();
 
             new Logger().Logging("User typed new command: " + command + '.');
 
-            string[] args = command.Split(' ');
+            List<string> arguments = command.Split(' ').ToList();
 
-            switch(args[0]) {
+            switch(arguments[0]) {
 
+                case "gitapi-limit":
+                    new API().Information(arguments);
+                    break;
+
+                case "repos-branches":
+                    new BranchContext().RepositoryBranches(arguments);
+                    break;
+
+                case "branch-info":
+                    new BranchContext().BranchInformation(arguments);
+                    break;
+
+                default:
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Wrong command! Please, check your input and write again!");
+                    break;
             }
         }
 
+        Console.ForegroundColor = ConsoleColor.Green;
         Console.WriteLine("Console has ended it's work. Press any button to close.");
         Console.WriteLine("For work-history, open app.log file and see system's logs");
 
