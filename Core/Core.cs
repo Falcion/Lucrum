@@ -37,6 +37,14 @@ public class Core {
                     new BranchContext().BranchInformation(arguments);
                     break;
 
+                case "repos-releases":
+                    new ReleaseContext().RepositoryReleases(arguments);
+                    break;
+
+                case "release-info":
+                    new ReleaseContext().ReleaseInformation(arguments);
+                    break;
+
                 case "shutdown":
                     break;
 
