@@ -37,6 +37,9 @@ public class Core {
                     new BranchContext().BranchInformation(arguments);
                     break;
 
+                case "shutdown":
+                    break;
+
                 default:
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Wrong command! Please, check your input and write again!");
