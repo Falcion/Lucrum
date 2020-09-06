@@ -11,7 +11,9 @@ public class Program {
         new Logger().Filling();
         new Configuration().Setting();
 
-        Console.WriteLine("Please, type command or write help for commands list. For more information, check software's GitHub repository.");
+        new Setup().Initialize();
+
+        Console.WriteLine("Please, type command or write gitapi-help for commands list. For more information, check software's GitHub repository.");
 
         new Core().CommandHandler();
     }

@@ -2,31 +2,21 @@ using System;
 
 public class Core {
 
-    private string prefix = Storage.Prefix;
-
     internal void CommandHandler() {
 
         string command = "";
 
-        while(command != prefix + "shutdown") {
+        while(command != "shutdown") {
+
+            Console.Write("Enter command: ");
 
             command = Console.ReadLine();
 
-            if(!command.StartsWith(prefix)) return;
-
             new Logger().Logging("User typed new command: " + command + '.');
-
-            int prefixLength = prefix.Length;
-
-            command = command.Remove(0, prefixLength);
 
             string[] args = command.Split(' ');
 
             switch(args[0]) {
-
-                case "shutdown":
-                    command = prefix + "shutdown";
-                    break;
 
             }
         }
