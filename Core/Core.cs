@@ -22,11 +22,10 @@ public class Core {
 
             string[] args = command.Split(' ');
 
-            switch (command)
-            {
+            switch(args[0]) {
 
-                case "gitapi-limit":
-                    new Git().Information(args);
+                case "shutdown":
+                    command = prefix + "shutdown";
                     break;
 
             }
