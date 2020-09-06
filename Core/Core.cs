@@ -48,6 +48,8 @@ public class Core {
         Console.WriteLine("Console has ended it's work. Press any button to close.");
         Console.WriteLine("For work-history, open app.log file and see system's logs");
 
+        Console.ForegroundColor = ConsoleColor.Black;
+
         new Logger().Logging("Console has ended it's work.");
 
         Environment.Exit(0);
