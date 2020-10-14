@@ -2,7 +2,7 @@
 
 ## Packages
 
-Stratum was written and debugged in [Visual Studio](https://visualstudio.microsoft.com/) with help of [Octokit](https://github.com/octokit/octokit.net).
+Lucrum was written and debugged in [Visual Studio](https://visualstudio.microsoft.com/) with help of [Octokit](https://github.com/octokit/octokit.net).
 
 ** **
 
